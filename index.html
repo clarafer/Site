@@ -159,6 +159,8 @@ span.psw {
   </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 // Get the modal
 var modal = document.getElementById('id01');
@@ -169,7 +171,41 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-</script>
+  const supabaseUrl = 'https://lcvafsnsvybjgmmzlwcu.supabase.co';
+const supabaseKey = 'sb_publishable_Ml4lqQo64uiULe7S8ICwqA_9D5VlwMB';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+async function fazerLogin() {
+    // 1. Ir buscar o que o utilizador escreveu nos campos
+    const userDigitado = document.getElementById('utilizador').value;
+    const passDigitada = document.getElementById('senha').value;
+
+    console.log("A tentar login para:", userDigitado);
+
+    // 2. Pedir ao Supabase para procurar na tabela 'Alunos' 
+    // um registo onde o campo 'Nome' seja igual ao que foi digitado
+    const { data: aluno, error } = await supabase
+        .from('Alunos')
+        .select('*')
+        .eq('Nome', userDigitado)
+        .single(); // Esperamos apenas um resultado
+
+    // 3. Verificar se houve erro ou se o aluno não existe
+    if (error || !aluno) {
+        alert("Utilizador não encontrado!");
+        return; // Pára a execução aqui
+    }
+
+    // 4. Se encontrou o aluno, vamos comparar a Password
+    
+    if (aluno.Pass === passDigitada) {
+        alert("Login com sucesso! Bem-vinda, " + aluno.Nome);
+
+        document.getElementById('id01').style.display='none';
+    } else {
+        alert("Password incorreta. Tenta novamente.");
+    }
+}
+</script>
 </body>
 </html>
