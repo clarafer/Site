@@ -176,6 +176,7 @@ const supabaseKey = 'sb_publishable_Ml4lqQo64uiULe7S8ICwqA_9D5VlwMB';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 async function fazerLogin() {
+  alert("A função foi chamada!");
     // 1. Ir buscar o que o utilizador escreveu nos campos
     const userDigitado = document.getElementById('utilizador').value;
     const passDigitada = document.getElementById('senha').value;
@@ -209,5 +210,6 @@ async function fazerLogin() {
 </script>
 </body>
 </html>
+
 
 
